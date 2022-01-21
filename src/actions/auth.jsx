@@ -7,6 +7,7 @@ export const startLogin = (email, password) => {
   return async (dispatch) => {
     const resp = await fetchSinToken("auth", { email, password }, "POST");
     const body = await resp.json();
+    console.log("despues de hacer el string a json", body);
 
     if (body.ok) {
       localStorage.setItem("token", body.token);
@@ -24,6 +25,7 @@ export const startRegister = (email, name, password) => {
       "POST"
     );
     const body = await resp.json();
+    console.log("despues de hacer el string a json", body);
 
     if (body.ok) {
       localStorage.setItem("token", body.token);
@@ -37,6 +39,7 @@ export const startChecking = () => {
   return async (dispatch) => {
     const resp = await fetchContToken("auth/renew");
     const body = await resp.json();
+    console.log("despues de hacer el string a json", body);
     if (body.ok) {
       localStorage.setItem("token", body.token);
       localStorage.setItem("token-init-date", new Date().getTime());

@@ -3,7 +3,7 @@ const baseUrl = process.env.REACT_APP_API_URL;
 const fetchSinToken = (endpoint, data, method = "GET") => {
   const url = `${baseUrl}/${endpoint}`;
 
-  if (method === "GET") return fetch(url);
+  if (method === "GET") return fetch(url).then((res) => res.stringify());
   else
     return fetch(url, {
       method,
@@ -12,14 +12,16 @@ const fetchSinToken = (endpoint, data, method = "GET") => {
         Accept: "application/json",
       },
       body: JSON.stringify(data),
-    });
+    }).then((res) => res.stringify());
 };
 
 const fetchContToken = (endpoint, data, method = "GET") => {
   const url = `${baseUrl}/${endpoint}`;
   const token = localStorage.getItem("token") || "";
   if (method === "GET")
-    return fetch(url, { method, headers: { "x-token": token } });
+    return fetch(url, { method, headers: { "x-token": token } }).then((res) =>
+      res.stringify()
+    );
   else
     return fetch(url, {
       method,
@@ -29,7 +31,7 @@ const fetchContToken = (endpoint, data, method = "GET") => {
         "x-token": token,
       },
       body: JSON.stringify(data),
-    });
+    }).then((res) => res.stringify());
 };
 
 export { fetchSinToken, fetchContToken };
